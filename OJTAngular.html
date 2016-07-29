@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="helloApp">
+<head>
+	<title>AngularJS </title>
+	<meta charset="utf-8">
+
+	<script
+			  src="https://code.jquery.com/jquery-2.2.4.js"
+			  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+			  crossorigin="anonymous"></script>
+
+
+	<script src="angularmin.js"></script>
+	<script src="controllers.js"></script>
+
+
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> 
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> 
+
+	
+
+
+
+	<script type="text/javascript">
+		var hidden1="FALSE";
+		var hidden2="FALSE";
+		var hidden3="FALSE";
+		var hidden4="FALSE";
+
+
+		
+</script>
+
+</head>
+
+<body ng-app="helloApp">                                                                                                                                                                                  
+	<div class="container" ng-controller="CompanyCtrl">
+
+		<!-- <p>{{test}}</p> -->
+
+		<form name="EmployeeForm" nonvalidate class="well"  autocomplete="on" >
+			<div class="form-group">
+				<label class="control-label col-sm-2">Name</label>
+				<input class="col-sm-10" type="text" placeholder="Enter name of company" name="name" ng-required="true" ng-model="company.name" ng-minlength="3" ng-maxlength="20"    /> <br>
+				<!-- show an error if name is too short -->
+				<span style="color:Crimson" ng-show="EmployeeForm.name.$error.minlength">Companyname is too short.</span>
+
+				<!-- show an error if name is too long -->
+				<span style="color:Crimson" ng-show="EmployeeForm.name.$error.maxlength">Companyname is too long.</span>
+
+				<!-- show an error if this isn't filled in -->
+				<span style="color:Crimson" ng-show="EmployeeForm.name.$error.required">Company name is required.</span>
+
+
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-2">Employees</label>
+				<input class="col-sm-10"  type="number" placeholder="Enter the number of employees" name="employees" ng-required="true" ng-model="company.employees"  min="50" max="4000"   /> <br>
+				<!-- show an error if No of employees is too short -->
+				<span style="color:Crimson" ng-show="EmployeeForm.employees.$error.min">No of employees is too short.</span>
+
+				<!-- show an error if No of employees is too long -->
+				<span style="color:Crimson"  ng-show="EmployeeForm.employees.$error.max">No of employees is too long.</span>
+
+				<!-- show an error if this isn't filled in -->
+				<span style="color:Crimson" ng-show="EmployeeForm.employees.$error.required">No of employees is required.</span>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-2">Age</label>
+				<input class="col-sm-10"  type="number" placeholder="Enter the age of employee" name="age" ng-required="true" ng-model="company.age"  min="20" max="70" /> <br>
+				<!-- show an error if No of employees is too short -->
+				<span  style="color:Crimson" ng-show="EmployeeForm.age.$error.min">Age of employee is too small.</span>
+
+				<!-- show an error if No of employees is too long -->
+				<span style="color:Crimson" ng-show="EmployeeForm.age.$error.max">Age of employee is too long.</span>
+
+				<!-- show an error if this isn't filled in -->
+				<span style="color:Crimson"  ng-show="EmployeeForm.age.$error.required">Age of employee is required.</span>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-2">Email</label>
+				<input class="col-sm-10" type="email" placeholder="Enter e-mail address"  name="email" ng-model="company.emailid" ng-required="true" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" /> <br>
+				<span  style="color:Crimson" ng-show="EmployeeForm.email.$error.pattern">Email ID invalid</span>
+				<span style="color:Crimson"  ng-show="EmployeeForm.email.$error.required">Email ID required.</span>
+
+			</div>
+		
+		<div class="form-group">
+			<label class="control-label col-sm-2">HeadOffice</label>
+			<input class="col-sm-10" type="text" placeholder="Enter the location"  name="headoffice" ng-required="true" ng-model="company.headoffice" /> <br>
+		</div>
+		<input type="submit" value="Save"  class="btn btn-primary" ng-click="addRow(company.name,company.employees,company.headoffice, company.age, company.emailid)" ng-disabled="!EmployeeForm.$valid" >
+		<button type="button"  class="bn btn-danger" ng-click="cancel()" > Cancel </button>
+		<button type="reset" value="Reset" ng-click = "reset()" class="btn btn-warning">Reset</button>
+
+
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr >
+					<th >Name
+					</th>
+					<th ng-show="hidden1">Employees
+					</th>
+					<th ng-show="hidden2">Head Office
+					</th>
+					<th ng-show="hidden3">Age
+					</th>
+					<th ng-show="hidden4">E-mail
+					</th>
+					<th>Action
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<tr  ng-repeat="company in companies track by $index" >
+					<td>{{company.name}}
+					</td>
+					<td ng-show="hidden1">{{company.employees}}
+					</td>
+					<td ng-show="hidden2">{{company.headoffice}}
+					</td> 
+					<td ng-show="hidden3">{{company.age}}
+					</td> 
+					<td ng-show="hidden4">{{company.emailid}}
+					</td>
+					<td>
+					<div ng-hello></div>
+						<input type="button" value="Remove" class="btn btn-primary" ng-click="removeRow(company.name)"/>
+					</td>
+					<td>
+						<input type="button" value="Modify" ng-click = "getICompanyInfo($index,company.id)" class="btn btn-success" >	
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+
+	</body>
+	</html>
+	
